@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Java HTTP client:jar">
+    <output-path>$PROJECT_DIR$/out/JAR</output-path>
+    <root id="archive" name="Java HTTP client.jar">
+      <element id="module-output" name="Java HTTP client" />
+    </root>
+  </artifact>
+</component>
