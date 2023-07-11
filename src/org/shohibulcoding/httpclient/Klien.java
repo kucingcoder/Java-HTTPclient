@@ -10,14 +10,14 @@ import java.net.URL;
 public class Klien {
     private String full_link, agent;
     int timeout = 60000;
-    public Permintaan request = new Permintaan();
+    public Permintaan permintaan = new Permintaan();
     public Respon respon = new Respon();
 
     public Klien(){}
     public Klien(int milidetik, String nama_agent, Permintaan request, Respon respon){
         this.timeout = milidetik;
         this.agent = nama_agent;
-        this.request = request;
+        this.permintaan = request;
         this.respon = respon;
     }
 
@@ -30,18 +30,18 @@ public class Klien {
     }
 
     public void eksekusi() throws IOException {
-        this.request.tambah_Header("User-Agent", this.agent);
+        this.permintaan.tambah_Header("User-Agent", this.agent);
 
-        full_link = this.request.get_Link();
+        full_link = this.permintaan.get_Link();
 
-        if (this.request.get_DaftarParameter() != null){
+        if (this.permintaan.get_DaftarParameter() != null){
             full_link += "?";
             int index = 1;
 
-            for (Query parameter:this.request.get_DaftarParameter()) {
+            for (Query parameter:this.permintaan.get_DaftarParameter()) {
                 full_link += parameter.key + "=" + parameter.value;
 
-                if (index != this.request.get_DaftarParameter().size()){
+                if (index != this.permintaan.get_DaftarParameter().size()){
                     full_link += "&";
                 }
 
@@ -51,32 +51,32 @@ public class Klien {
 
         URL server = new URL(full_link);
         HttpURLConnection koneksi = (HttpURLConnection) server.openConnection();
-        if (this.request.get_Permintaan().toString() == "PATCH") {
+        if (this.permintaan.get_Permintaan().toString() == "PATCH") {
             koneksi.setRequestMethod("POST");
-            this.request.tambah_Header("X-HTTP-Method-Override", "PATCH");
+            this.permintaan.tambah_Header("X-HTTP-Method-Override", "PATCH");
         } else {
-            koneksi.setRequestMethod(this.request.get_Permintaan().toString());
+            koneksi.setRequestMethod(this.permintaan.get_Permintaan().toString());
         }
 
         koneksi.setConnectTimeout(this.timeout);
         koneksi.setReadTimeout(this.timeout);
 
-        if (this.request.get_Permintaan().toString() != "GET" && this.request.get_Data() != null) {
-            if (this.request.get_Data().startsWith("{") && this.request.get_Data().endsWith("}")) {
-                this.request.tambah_Header("Content-Type", "application/json");
+        if (this.permintaan.get_Permintaan().toString() != "GET" && this.permintaan.get_Data() != null) {
+            if (this.permintaan.get_Data().startsWith("{") && this.permintaan.get_Data().endsWith("}")) {
+                this.permintaan.tambah_Header("Content-Type", "application/json");
             }
         }
 
-        if(this.request.get_DaftarHeader() != null){
-            for (Header header:this.request.get_DaftarHeader()) {
+        if(this.permintaan.get_DaftarHeader() != null){
+            for (Header header:this.permintaan.get_DaftarHeader()) {
                 koneksi.setRequestProperty(header.key, header.value);
             }
         }
 
-        if (this.request.get_Permintaan().toString() != "GET" && this.request.get_Data() != null) {
+        if (this.permintaan.get_Permintaan().toString() != "GET" && this.permintaan.get_Data() != null) {
             koneksi.setDoOutput(true);
             OutputStream outputStream = koneksi.getOutputStream();
-            outputStream.write(this.request.get_Data().getBytes());
+            outputStream.write(this.permintaan.get_Data().getBytes());
             outputStream.flush();
             outputStream.close();
         }
