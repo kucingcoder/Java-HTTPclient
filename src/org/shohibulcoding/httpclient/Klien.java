@@ -7,18 +7,18 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class M_IBRAHIM_HANIF_client {
+public class Klien {
     private String full_link, agent;
     int timeout = 60000;
-    public Request request = new Request();
-    public Response response = new Response();
+    public Permintaan request = new Permintaan();
+    public Respon respon = new Respon();
 
-    public M_IBRAHIM_HANIF_client(){}
-    public M_IBRAHIM_HANIF_client(int milidetik, String nama_agent, Request request, Response response){
+    public Klien(){}
+    public Klien(int milidetik, String nama_agent, Permintaan request, Respon respon){
         this.timeout = milidetik;
         this.agent = nama_agent;
         this.request = request;
-        this.response = response;
+        this.respon = respon;
     }
 
     public void set_Agent(String nama_agent){
@@ -81,15 +81,15 @@ public class M_IBRAHIM_HANIF_client {
             outputStream.close();
         }
 
-        this.response.set_Kode(koneksi.getResponseCode());
-        this.response.set_Pesan(koneksi.getResponseMessage());
+        this.respon.set_Kode(koneksi.getResponseCode());
+        this.respon.set_Pesan(koneksi.getResponseMessage());
 
         for(int i = 0; koneksi.getHeaderFieldKey(i) != null || koneksi.getHeaderField(i) != null; ++i) {
-            this.response.tambah_Header(koneksi.getHeaderFieldKey(i), koneksi.getHeaderField(i));
+            this.respon.tambah_Header(koneksi.getHeaderFieldKey(i), koneksi.getHeaderField(i));
         }
 
         BufferedReader reader;
-        if (this.response.get_Kode() >= 200 && this.response.get_Kode() < 300) {
+        if (this.respon.get_Kode() >= 200 && this.respon.get_Kode() < 300) {
             reader = new BufferedReader(new InputStreamReader(koneksi.getInputStream()));
         } else {
             reader = new BufferedReader(new InputStreamReader(koneksi.getErrorStream()));
@@ -102,7 +102,7 @@ public class M_IBRAHIM_HANIF_client {
             responseBody.append(line);
         }
 
-        this.response.set_Data(responseBody.toString());
+        this.respon.set_Data(responseBody.toString());
         reader.close();
         koneksi.disconnect();
     }

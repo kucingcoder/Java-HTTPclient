@@ -2,15 +2,15 @@ package org.shohibulcoding.httpclient;
 
 import java.util.ArrayList;
 
-public class Response {
+public class Respon {
     private int kode;
     private String pesan, data;
 
     ArrayList<Header> daftar_header = new ArrayList<>();
 
-    public Response(){}
+    public Respon(){}
 
-    public Response(int kode, String pesan, String data, ArrayList<Header> daftar_header){
+    public Respon(int kode, String pesan, String data, ArrayList<Header> daftar_header){
         this.kode = kode;
         this.pesan = pesan;
         this.data = data;

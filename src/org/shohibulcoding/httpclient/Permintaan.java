@@ -2,15 +2,15 @@ package org.shohibulcoding.httpclient;
 
 import java.util.ArrayList;
 
-public class Request {
+public class Permintaan {
     private String link, data;
     private Metode permintaan;
     ArrayList<Query> daftar_parameter = new ArrayList<>();
     ArrayList<Header> daftar_header = new ArrayList<>();
 
-    public Request(){}
+    public Permintaan(){}
 
-    public Request(String link, String data, Metode permintaan, ArrayList<Query> daftar_parameter, ArrayList<Header> daftar_header){
+    public Permintaan(String link, String data, Metode permintaan, ArrayList<Query> daftar_parameter, ArrayList<Header> daftar_header){
         this.link = link;
         this.data = data;
         this.permintaan = permintaan;
